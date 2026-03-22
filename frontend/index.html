@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogINK — Accueil</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --ink: #0d0d0d;
+            --paper: #f5f0e8;
+            --cream: #ede8da;
+            --accent: #c8392b;
+            --gold: #b8960c;
+            --muted: #7a7060;
+            --border: #d4cfc0;
+            --card-bg: #faf7f2;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        /* ── NAVBAR ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--ink);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            height: 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .nav-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--paper);
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--accent);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-user {
+            color: rgba(245, 240, 232, 0.65);
+            font-size: 0.85rem;
+        }
+
+        .nav-user strong {
+            color: var(--paper);
+        }
+
+        .btn-nav {
+            padding: 0.45rem 1rem;
+            border-radius: 5px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-write {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-write:hover {
+            background: #a93226;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: rgba(245, 240, 232, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-logout:hover {
+            color: var(--paper);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            background: var(--ink);
+            padding: 3.5rem 2rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            color: var(--paper);
+            line-height: 1.15;
+        }
+
+        .hero h1 em {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero p {
+            color: rgba(245, 240, 232, 0.5);
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        /* ── SEARCH BAR ── */
+        .search-bar {
+            max-width: 560px;
+            margin: -1.5rem auto 0;
+            display: flex;
+            gap: 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.9rem 1.2rem;
+            border: none;
+            outline: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            background: white;
+            color: var(--ink);
+        }
+
+        .search-bar input::placeholder {
+            color: #b0a898;
+        }
+
+        .search-bar button {
+            padding: 0 1.4rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        .search-bar button:hover {
+            background: #a93226;
+        }
+
+        /* ── LAYOUT ── */
+        .layout {
+            max-width: 1100px;
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2.5rem;
+            padding: 0 2rem;
+        }
+
+        /* ── FILTERS ── */
+        .filters {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filters span {
+            font-size: 0.78rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-right: 0.3rem;
+        }
+
+        .filter-btn {
+            padding: 0.35rem 0.85rem;
+            border-radius: 20px;
+            border: 1.5px solid var(--border);
+            background: transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--ink);
+            color: var(--paper);
+            border-color: var(--ink);
+        }
+
+        /* ── ARTICLE CARD ── */
+        .articles-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5px;
+        }
+
+        .article-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.6rem;
+            margin-bottom: 1px;
+            transition: box-shadow 0.2s, transform 0.2s;
+            animation: fadeUp 0.4s ease both;
+        }
+
+        .article-card:hover {
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card-cat {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            padding: 0.15rem 0.6rem;
+        }
+
+        .card-date {
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .card-excerpt {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 1rem;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-author {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--paper);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .author-name {
+            font-size: 0.84rem;
+            font-weight: 500;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.3rem 0.7rem;
+            border-radius: 5px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .btn-delete {
+            background: #fff0f0;
+            color: #c62828;
+            border-color: #ffcdd2;
+        }
+
+        .btn-delete:hover {
+            background: #c62828;
+            color: white;
+        }
+
+        .btn-read {
+            background: var(--cream);
+            color: var(--ink);
+            border-color: var(--border);
+        }
+
+        .btn-read:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* ── TAGS ── */
+        .card-tags {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+            margin-top: 0.6rem;
+        }
+
+        .tag {
+            font-size: 0.73rem;
+            color: var(--muted);
+            background: var(--cream);
+            border-radius: 3px;
+            padding: 0.1rem 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar-widget {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.4rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .widget-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .stat-row:last-child {
+            border: none;
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .cat-list {
+            list-style: none;
+        }
+
+        .cat-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.45rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .cat-list li:last-child {
+            border: none;
+        }
+
+        .cat-list li:hover {
+            color: var(--accent);
+        }
+
+        .cat-count {
+            background: var(--cream);
+            border-radius: 10px;
+            padding: 0.1rem 0.5rem;
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+
+        /* ── EMPTY STATE ── */
+        .empty {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--muted);
+        }
+
+        .empty .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .empty p {
+            font-size: 0.9rem;
+        }
+
+        /* ── LOADING ── */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border);
+            border-top-color: var(--ink);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ── MODAL WRITE ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(13, 13, 13, 0.6);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--paper);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            animation: modalIn 0.25s ease;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+        }
+
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--muted);
+            line-height: 1;
+        }
+
+        .btn-close:hover {
+            color: var(--ink);
+        }
+
+        .modal .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal label {
+            display: block;
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .modal input,
+        .modal textarea,
+        .modal select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--cream);
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.92rem;
+            color: var(--ink);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .modal input:focus,
+        .modal textarea:focus {
+            border-color: var(--ink);
+        }
+
+        .modal textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .modal-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-publish {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn-publish:hover {
+            background: #2a2a2a;
+        }
+
+        .modal-msg {
+            margin-top: 0.8rem;
+            padding: 0.65rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.86rem;
+            display: none;
+        }
+
+        .modal-msg.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #a5d6a7;
+            display: block;
+        }
+
+        .modal-msg.error {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+            display: block;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 999;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.3s;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 800px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+            nav {
+                padding: 0 1rem;
+            }
+
+            .layout {
+                padding: 0 1rem;
+            }
+
+            .modal-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <a href="/blog" class="nav-brand">Blog<span>INK</span></a>
+        <div class="nav-right">
+            <span class="nav-user">Bonjour, <strong id="nav-username">—</strong></span>
+            <button class="btn-nav btn-write" onclick="openModal()">✏️ Écrire</button>
+            <button class="btn-nav btn-logout" onclick="logout()">Déconnexion</button>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>Les <em>meilleures idées</em><br>naissent ici.</h1>
+        <p>Découvrez les articles de la communauté BlogINK</p>
+    </div>
+
+    <!-- SEARCH -->
+    <div style="padding: 0 2rem;">
+        <div class="search-bar">
+            <input id="search-input" placeholder="Rechercher un article..."
+                onkeydown="if(event.key==='Enter') searchArticles()">
+            <button onclick="searchArticles()">🔍</button>
+        </div>
+    </div>
+
+    <!-- MAIN LAYOUT -->
+    <div class="layout">
+        <!-- FEED -->
+        <main>
+            <div class="filters">
+                <span>Filtrer :</span>
+                <button class="filter-btn active" onclick="filterCat(null, this)">Tous</button>
+                <button class="filter-btn" onclick="filterCat('Tech', this)">Tech</button>
+                <button class="filter-btn" onclick="filterCat('Science', this)">Science</button>
+                <button class="filter-btn" onclick="filterCat('Culture', this)">Culture</button>
+                <button class="filter-btn" onclick="filterCat('Actu', this)">Actu</button>
+            </div>
+
+            <div id="articles-list" class="articles-list">
+                <div class="loading"><span class="spinner"></span> Chargement des articles…</div>
+            </div>
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-widget">
+                <div class="widget-title">📊 Statistiques</div>
+                <div class="stat-row"><span>Articles publiés</span><span class="stat-num" id="stat-count">—</span></div>
+                <div class="stat-row"><span>Auteurs</span><span class="stat-num" id="stat-authors">—</span></div>
+                <div class="stat-row"><span>Catégories</span><span class="stat-num" id="stat-cats">—</span></div>
+            </div>
+
+            <div class="sidebar-widget">
+                <div class="widget-title">📁 Catégories</div>
+                <ul class="cat-list" id="cat-list">
+                    <li><span>—</span></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget" style="background: var(--ink); border-color: transparent;">
+                <div class="widget-title" style="color: var(--paper); border-color: rgba(255,255,255,0.15);">💡 Astuce
+                </div>
+                <p style="font-size:0.84rem; color: rgba(245,240,232,0.6); line-height:1.6;">
+                    Utilisez la barre de recherche pour trouver des articles par mots-clés dans le titre ou le contenu.
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- MODAL WRITE -->
+    <div class="modal-overlay" id="write-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>✏️ Nouvel article</h2>
+                <button class="btn-close" onclick="closeModal()">×</button>
+            </div>
+
+            <div class="form-group">
+                <label>Titre *</label>
+                <input id="m-titre" placeholder="Donnez un titre accrocheur…">
+            </div>
+            <div class="form-group">
+                <label>Contenu *</label>
+                <textarea id="m-contenu" placeholder="Rédigez votre article ici…" rows="6"></textarea>
+            </div>
+            <div class="modal-row">
+                <div class="form-group">
+                    <label>Auteur *</label>
+                    <input id="m-auteur" placeholder="Votre nom">
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select id="m-categorie">
+                        <option value="General">General</option>
+                        <option value="Tech">Tech</option>
+                        <option value="Science">Science</option>
+                        <option value="Culture">Culture</option>
+                        <option value="Actu">Actu</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tags (séparés par des virgules)</label>
+                <input id="m-tags" placeholder="ex: python, flask, api">
+            </div>
+
+            <button class="btn-publish" onclick="publishArticle()">Publier l'article</button>
+            <div id="modal-msg" class="modal-msg"></div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const API = "http://127.0.0.1:5000/api";
+
+        // ── Auth — toujours lire depuis localStorage au moment de l'appel ────────
+        // NE PAS stocker token dans une const globale : si l'utilisateur vient
+        // de se connecter, la valeur serait déjà périmée au chargement.
+        function getToken() { return localStorage.getItem("token"); }
+        function getUsername() { return localStorage.getItem("username") || "Invité"; }
+
+        document.getElementById("nav-username").textContent = getUsername();
+        document.getElementById("m-auteur").value = getUsername();
+
+        function logout() {
+            localStorage.removeItem("token");
+            localStorage.removeItem("username");
+            window.location.href = "/login";
+        }
+
+        // ── Toast ───────────────────────────────────────────────────────────────
+        function showToast(msg) {
+            const t = document.getElementById("toast");
+            t.textContent = msg; t.classList.add("show");
+            setTimeout(() => t.classList.remove("show"), 3000);
+        }
+
+        // ── Modal ───────────────────────────────────────────────────────────────
+        function openModal() {
+            // Lire le token AU MOMENT du clic, pas au chargement de la page
+            if (!getToken()) {
+                showToast("⚠️ Connectez-vous pour écrire un article.");
+                return;   // on reste sur la page, on ne redirige PAS
+            }
+            document.getElementById("write-modal").classList.add("open");
+        }
+        function closeModal() {
+            document.getElementById("write-modal").classList.remove("open");
+            document.getElementById("modal-msg").className = "modal-msg";
+        }
+        document.getElementById("write-modal").addEventListener("click", e => {
+            if (e.target === e.currentTarget) closeModal();
+        });
+
+        // ── Render articles ─────────────────────────────────────────────────────
+        function renderArticles(articles) {
+            const el = document.getElementById("articles-list");
+
+            if (!articles || articles.length === 0) {
+                el.innerHTML = `<div class="empty"><div class="empty-icon">📭</div><p>Aucun article trouvé.</p></div>`;
+                return;
+            }
+
+            el.innerHTML = "";
+            articles.forEach((a, i) => {
+                const initials = (a.auteur || "?").substring(0, 2).toUpperCase();
+                const date = a.created_at ? new Date(a.created_at).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" }) : "—";
+                const excerpt = (a.contenu || "").length > 160 ? a.contenu.substring(0, 160) + "…" : a.contenu;
+                const tags = a.tags ? a.tags.split(",").map(t => t.trim()).filter(Boolean) : [];
+
+                const card = document.createElement("div");
+                card.className = "article-card";
+                card.style.animationDelay = (i * 0.07) + "s";
+                card.innerHTML = `
+          <div class="card-meta">
+            <span class="card-cat">${a.categorie || "General"}</span>
+            <span class="card-date">${date}</span>
+          </div>
+          <div class="card-title">${a.titre}</div>
+          <div class="card-excerpt">${excerpt}</div>
+          ${tags.length ? `<div class="card-tags">${tags.map(t => `<span class="tag">#${t}</span>`).join("")}</div>` : ""}
+          <div class="card-footer" style="margin-top:1rem;">
+            <div class="card-author">
+              <div class="avatar">${initials}</div>
+              <span class="author-name">${a.auteur}</span>
+            </div>
+            ${getToken() ? `<div class="card-actions"><button class="btn-sm btn-delete" onclick="deleteArticle(${a.id})">🗑 Supprimer</button></div>` : ""}
+          </div>`;
+                el.appendChild(card);
+            });
+        }
+
+        // ── Update sidebar stats ─────────────────────────────────────────────────
+        function updateStats(articles) {
+            document.getElementById("stat-count").textContent = articles.length;
+            const authors = new Set(articles.map(a => a.auteur)).size;
+            const cats = {};
+            articles.forEach(a => { const c = a.categorie || "General"; cats[c] = (cats[c] || 0) + 1; });
+            document.getElementById("stat-authors").textContent = authors;
+            document.getElementById("stat-cats").textContent = Object.keys(cats).length;
+
+            const catList = document.getElementById("cat-list");
+            catList.innerHTML = Object.entries(cats).sort((a, b) => b[1] - a[1])
+                .map(([c, n]) => `<li onclick="filterCat('${c}')"><span>${c}</span><span class="cat-count">${n}</span></li>`).join("");
+        }
+
+        // ── Load all articles ────────────────────────────────────────────────────
+        async function loadArticles(categorie = null) {
+            document.getElementById("articles-list").innerHTML = `<div class="loading"><span class="spinner"></span> Chargement…</div>`;
+            try {
+                let url = API + "/articles";
+                if (categorie) url += "?categorie=" + encodeURIComponent(categorie);
+                const res = await fetch(url);
+                const data = await res.json();
+                renderArticles(data.data || []);
+                if (!categorie) updateStats(data.data || []);
+            } catch (e) {
+                document.getElementById("articles-list").innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><p>Erreur de connexion au serveur.</p></div>`;
+            }
+        }
+
+        // ── Filter by category ───────────────────────────────────────────────────
+        function filterCat(cat, btn) {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            if (btn) btn.classList.add("active");
+            loadArticles(cat);
+        }
+
+        // ── Search ───────────────────────────────────────────────────────────────
+        async function searchArticles() {
+            const q = document.getElementById("search-input").value.trim();
+            if (!q) { loadArticles(); return; }
+            document.getElementById("articles-list").innerHTML = `<div class="loading"><span class="spinner"></span> Recherche…</div>`;
+            try {
+                const res = await fetch(API + "/articles/search?query=" + encodeURIComponent(q));
+                const data = await res.json();
+                renderArticles(data.data || []);
+            } catch (e) { }
+        }
+
+        // ── Publish ──────────────────────────────────────────────────────────────
+        async function publishArticle() {
+            const titre = document.getElementById("m-titre").value.trim();
+            const contenu = document.getElementById("m-contenu").value.trim();
+            const auteur = document.getElementById("m-auteur").value.trim();
+            const categorie = document.getElementById("m-categorie").value;
+            const tags = document.getElementById("m-tags").value.trim();
+            const msg = document.getElementById("modal-msg");
+            msg.className = "modal-msg";
+
+            if (!titre || !contenu || !auteur) {
+                msg.className = "modal-msg error"; msg.textContent = "Titre, contenu et auteur sont obligatoires."; return;
+            }
+
+            const btn = document.querySelector(".btn-publish");
+            btn.textContent = "Publication…"; btn.disabled = true;
+
+            try {
+                const res = await fetch(API + "/articles", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+                    body: JSON.stringify({ titre, contenu, auteur, categorie, tags })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    msg.className = "modal-msg error"; msg.textContent = data.error || JSON.stringify(data.errors || "Erreur");
+                } else {
+                    msg.className = "modal-msg success"; msg.textContent = "✅ Article publié !";
+                    setTimeout(() => { closeModal(); loadArticles(); showToast("✅ Article publié avec succès !"); }, 1000);
+                    document.getElementById("m-titre").value = "";
+                    document.getElementById("m-contenu").value = "";
+                    document.getElementById("m-tags").value = "";
+                }
+            } catch (e) {
+                msg.className = "modal-msg error"; msg.textContent = "Erreur réseau.";
+            }
+            btn.textContent = "Publier l'article"; btn.disabled = false;
+        }
+
+        // ── Delete ────────────────────────────────────────────────────────────────
+        async function deleteArticle(id) {
+            if (!confirm("Supprimer cet article définitivement ?")) return;
+            try {
+                const res = await fetch(API + "/articles/" + id, {
+                    method: "DELETE", headers: { "Authorization": "Bearer " + getToken() }
+                });
+                if (res.ok) { showToast("🗑 Article supprimé."); loadArticles(); }
+                else showToast("❌ Erreur lors de la suppression.");
+            } catch (e) { showToast("❌ Erreur réseau."); }
+        }
+
+        // ── Init ──────────────────────────────────────────────────────────────────
+        loadArticles();
+    </script>
+</body>
+
+</html>
